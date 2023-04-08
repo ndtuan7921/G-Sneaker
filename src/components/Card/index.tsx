@@ -2,6 +2,7 @@ import React from "react";
 import "./card.style.css";
 import nike_logo from "../../assets/nike.png";
 import Product from "../Item/Product";
+import Cart from "../Item/Cart";
 
 type CardProps = {};
 
@@ -28,6 +29,7 @@ const Card = (props: CardProps) => {
         </div>
         <div className="cardBody">
           <Product {...shoe} />
+          <Cart {...shoe} />
         </div>
       </div>
     </>

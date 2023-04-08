@@ -1,23 +1,24 @@
-import React from "react";
+import React, { ComponentType } from "react";
 import "./card.style.css";
 import nike_logo from "../../assets/nike.png";
 import Product from "../Item/Product";
 import Cart from "../Item/Cart";
+import CartContainer from "../List/Cart";
+import ProductContainer from "../List/Product";
 
-type CardProps = {};
-
-const shoe = {
-  //   id: 1,
-  image:
-    "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1315882/air-zoom-pegasus-36-mens-running-shoe-wide-D24Mcz-removebg-preview.png",
-  name: "Nike Air Zoom Pegasus 36",
-  description:
-    "The iconic Nike Air Zoom Pegasus 36 offers more cooling and mesh that targets breathability across high-heat areas. A slimmer heel collar and tongue reduce bulk, while exposed cables give you a snug fit at higher speeds.",
-  price: 108.97,
-  color: "#e1e7ed",
+type CardProps = {
+  isCart?: boolean;
+  data?: any;
+  handleAddItem?: (item: any) => void;
 };
 
 const Card = (props: CardProps) => {
+  // console.log(props);
+  const { isCart = false, data, handleAddItem } = props;
+
+  const Component: ComponentType<any> = isCart
+    ? CartContainer
+    : ProductContainer;
   return (
     <>
       <div className="card">
@@ -25,11 +26,17 @@ const Card = (props: CardProps) => {
           <div className="logo">
             <img src={nike_logo} alt="logo" />
           </div>
-          <div className="title">Our Products</div>
+          {!isCart ? (
+            <div className="title">Our Products</div>
+          ) : (
+            <div className="title">
+              Your Cart
+              <span className="titleAmount">$89.97</span>
+            </div>
+          )}
         </div>
         <div className="cardBody">
-          <Product {...shoe} />
-          <Cart {...shoe} />
+          <Component {...props} />
         </div>
       </div>
     </>

@@ -41,6 +41,9 @@
   margin: 16px 0;
   position: relative;
 }
+.card .cardHeader .title .titleAmount {
+  float: right;
+}
 
 .card .cardBody {
   height: calc(100% - 98px);

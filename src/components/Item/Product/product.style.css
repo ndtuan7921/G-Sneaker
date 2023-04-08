@@ -70,19 +70,19 @@
 
 /* When button is clicked */
 
-.added {
+.clicked {
   width: 46px;
   padding: 16px 13px;
   pointer-events: none;
   cursor: default;
 }
 
-.added:hover {
+.clicked:hover {
   background-color: #f8d43f;
   box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.15);
 }
 
-.added > img {
+.clicked > img {
   width: 20px;
   height: 20px;
   position: absolute;

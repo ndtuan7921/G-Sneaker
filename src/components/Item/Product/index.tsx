@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import IconCheck from "../../../assets/check.png";
 import "./product.style.css";
 
@@ -8,10 +8,19 @@ type ProductProps = {
   description: string;
   price: number;
   color: string;
+  handleAddItem: (item: any) => void;
 };
 
 const Product = (props: ProductProps) => {
-  const { image, name, description, price, color } = props;
+  // console.log(props);
+  const { image, name, description, price, color, handleAddItem } = props;
+  const [added, setIsAdded] = useState(false);
+
+  const handleOnClick = () => {
+    const selectedItem = { image, name, description, price, color };
+    handleAddItem(selectedItem);
+    setIsAdded(!added);
+  };
   return (
     <>
       <div className="productItem">
@@ -25,9 +34,15 @@ const Product = (props: ProductProps) => {
         <div className="productItem__Description">{description}</div>
         <div className="productItem__Bottom">
           <div className="productItemPrice">${price}</div>
-          <div className="productItemButton">
-            <p>Add to cart</p>
-            {/* <img src={IconCheck} alt="IconCheck" /> */}
+          <div
+            className={`productItemButton ${added && "clicked"}`}
+            onClick={handleOnClick}
+          >
+            {added ? (
+              <img src={IconCheck} alt="IconCheck" />
+            ) : (
+              <p>Add to cart</p>
+            )}
           </div>
         </div>
       </div>

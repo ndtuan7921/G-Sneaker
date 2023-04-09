@@ -2,36 +2,74 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Card from "./components/Card";
 
-const shoe = {
-  //   id: 1,
-  image:
-    "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1315882/air-zoom-pegasus-36-mens-running-shoe-wide-D24Mcz-removebg-preview.png",
-  name: "Nike Air Zoom Pegasus 36",
-  description:
-    "The iconic Nike Air Zoom Pegasus 36 offers more cooling and mesh that targets breathability across high-heat areas. A slimmer heel collar and tongue reduce bulk, while exposed cables give you a snug fit at higher speeds.",
-  price: 108.97,
-  color: "#e1e7ed",
-};
+export interface base {
+  id: number;
+  image: string;
+  name: string;
+  description: string;
+  price: number;
+  color: string;
+}
+
+export interface shoe extends base {
+  isInCart: boolean;
+}
+
+export interface selectedShoe extends base {
+  quantity: number;
+}
 
 function App() {
-  const [data, setData] = useState([]);
-  const [selectedItem, setSelectedItem] = useState<any>([]);
+  const [data, setData] = useState<shoe[]>([]);
+  const [cart, setCart] = useState<selectedShoe[]>([]);
   useEffect(() => {
     fetch("/src/data/shoes.json")
       .then((res) => res.json())
-      .then((data) => setData(data.shoes))
+      .then((data) => {
+        const result = data.shoes.map((data: shoe) => ({
+          ...data,
+          isInCart: false,
+        }));
+        setData(result);
+      })
       .catch((err) => {
         throw new Error(err);
       });
   }, []);
-  const addItem = (item: any) => {
-    setSelectedItem([...selectedItem, item]);
+
+  const handleAddItem = (item: selectedShoe) => {
+    const index = data.findIndex((shoe) => shoe.id === item.id);
+    data[index].isInCart = true;
+    setData([...data]);
+    setCart([...cart, item]);
   };
-  console.log(selectedItem);
+
+  const handleRemoveItem = (item: selectedShoe) => {
+    const filteredCart = cart.filter(
+      (index: selectedShoe) => index.id !== item.id
+    );
+    setCart(filteredCart);
+
+    const index = data.findIndex((shoe) => shoe.id === item.id);
+    data[index].isInCart = false;
+    setData([...data]);
+  };
+
+  const handleChangeQuantity = (id: number, count: number) => {
+    const index = cart.findIndex((shoe) => shoe.id === id);
+    cart[index].quantity = count;
+    setCart([...cart]);
+  };
+
   return (
     <div className="App">
-      <Card data={data} handleAddItem={addItem} />
-      <Card isCart />
+      <Card data={data} handleAddItem={handleAddItem} />
+      <Card
+        data={cart}
+        handleRemoveItem={handleRemoveItem}
+        handleChangeQuantity={handleChangeQuantity}
+        isCart
+      />
     </div>
   );
 }

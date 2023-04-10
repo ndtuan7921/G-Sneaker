@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Card from "./components/Card";
+import DataRaw from "./assets/data/shoes.json";
 
 export interface base {
   id: number;
@@ -23,18 +24,23 @@ function App() {
   const [data, setData] = useState<shoe[]>([]);
   const [cart, setCart] = useState<selectedShoe[]>([]);
   useEffect(() => {
-    fetch("/src/assets/data/shoes.json")
-      .then((res) => res.json())
-      .then((data) => {
-        const result = data.shoes.map((data: shoe) => ({
-          ...data,
-          isInCart: false,
-        }));
-        setData(result);
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+    // fetch("/src/assets/data/shoes.json")
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     const result = data.shoes.map((data: shoe) => ({
+    //       ...data,
+    //       isInCart: false,
+    //     }));
+    //     setData(result);
+    //   })
+    //   .catch((err) => {
+    //     throw new Error(err);
+    //   });
+    const result = DataRaw.shoes.map((data) => ({
+      ...data,
+      isInCart: false,
+    }));
+    setData(result);
   }, []);
 
   const handleAddItem = (item: selectedShoe) => {

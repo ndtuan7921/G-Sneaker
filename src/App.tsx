@@ -61,6 +61,10 @@ function App() {
     setCart([...cart]);
   };
 
+  useEffect(() => {
+    localStorage.setItem("your cart", JSON.stringify(cart));
+  }, [cart]);
+
   return (
     <div className="App">
       <Card data={data} handleAddItem={handleAddItem} />

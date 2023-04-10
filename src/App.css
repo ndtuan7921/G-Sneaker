@@ -9,3 +9,34 @@
   column-gap: 2.5rem;
   align-items: center;
 }
+
+.App::before {
+  content: "";
+  display: block;
+  position: fixed;
+  width: 300%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  border-radius: 100%;
+  transform: translateX(-50%) skewY(-8deg);
+  background-color: #f6c90e;
+  z-index: -1;
+  animation: App_wave_3CtRm 8s ease-in-out infinite alternate;
+}
+
+@keyframes App_wave_3CtRm {
+  0% {
+    transform: translateX(-50%) skew(0deg, -8deg);
+  }
+
+  to {
+    transform: translateX(-30%) skew(8deg, -4deg);
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .App {
+    flex-direction: column;
+  }
+}

@@ -23,7 +23,7 @@ function App() {
   const [data, setData] = useState<shoe[]>([]);
   const [cart, setCart] = useState<selectedShoe[]>([]);
   useEffect(() => {
-    fetch("/src/data/shoes.json")
+    fetch("/src/assets/data/shoes.json")
       .then((res) => res.json())
       .then((data) => {
         const result = data.shoes.map((data: shoe) => ({

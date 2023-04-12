@@ -22,7 +22,10 @@ export interface selectedShoe extends base {
 
 function App() {
   const [data, setData] = useState<shoe[]>([]);
-  const [cart, setCart] = useState<selectedShoe[]>([]);
+  const [cart, setCart] = useState<selectedShoe[]>(() => {
+    const localCartStore = JSON.parse(localStorage.getItem("your cart")!);
+    return localCartStore ? localCartStore : [];
+  });
   useEffect(() => {
     // fetch("/src/assets/data/shoes.json")
     //   .then((res) => res.json())
@@ -70,6 +73,12 @@ function App() {
   useEffect(() => {
     localStorage.setItem("your cart", JSON.stringify(cart));
   }, [cart]);
+
+  // useEffect(() => {
+  //   const localCartStore = JSON.parse(localStorage.getItem("your cart")!);
+  //   // console.log(localCartStore);
+  //   // localCartStore && setCart(localCartStore);
+  // }, []);
 
   return (
     <div className="App">
